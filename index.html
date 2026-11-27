@@ -44,6 +44,7 @@ h2{font-size:24px;margin:0 0 6px;font-weight:900}
 .t-gpu{color:var(--c2);border-color:var(--c2)}
 .t-vd{color:var(--c4);border-color:var(--c4)}
 .t-hand{color:#1f8a4c;border-color:#1f8a4c}
+.t-only{background:var(--c2);color:#141733;border-color:var(--c2)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .t-hand{color:#5fd58d;border-color:#5fd58d}}
 :root[data-theme="dark"] .t-hand{color:#5fd58d;border-color:#5fd58d}
 .t-warn{color:var(--warn);background:var(--warnbg);border-color:var(--warn)}
@@ -113,7 +114,7 @@ footer{padding:32px 0 48px;color:var(--sub);font-size:14px;border-top:1px solid 
 
 <section>
 <h2>作品</h2>
-<div style="display:grid;gap:6px;margin:0 0 20px"><div><span class="tag t-vrm">VRM</span> VRMファイルをドラッグ＆ドロップして、VR上でアバターとして着用できます。</div><div><span class="tag t-warn">Quest3ブラウザ非推奨</span> VRじゃないブラウザ画面のAbyssal Gardenが重い、VRでは固まる。</div></div>
+<div style="display:grid;gap:6px;margin:0 0 20px"><div><span class="tag t-vrm">VRM</span> VRMファイルをドラッグ＆ドロップして、VR上でアバターとして着用できます。</div><div><span class="tag t-warn">Quest3ブラウザ非推奨</span> VRじゃないブラウザ画面のAbyssal Gardenが重い、VRでは固まる。</div><div><span class="tag t-only">WebGPU専用</span> WebGLへのフォールバックがなく、WebGPUに対応した環境でのみ動きます。</div></div>
 <ul class="works" id="works"></ul>
 </section>
 
@@ -125,9 +126,9 @@ footer{padding:32px 0 48px;color:var(--sub);font-size:14px;border-top:1px solid 
 </div>
 
 <script>
-var T={vrm:["VRM","t-vrm"],xr:["WebXR","t-xr"],gpu:["WebGPU","t-gpu"],vd:["Virtual Desktop + SteamVR","t-vd"],hand:["ハンドトラッキング","t-hand"],warn:["Quest3ブラウザ非推奨","t-warn"]};
+var T={vrm:["VRM","t-vrm"],xr:["WebXR","t-xr"],gpu:["WebGPU","t-gpu"],vd:["Virtual Desktop + SteamVR","t-vd"],hand:["ハンドトラッキング","t-hand"],gpuonly:["WebGPU専用","t-only"],warn:["Quest3ブラウザ非推奨","t-warn"]};
 var W=[
-{n:"バーチャル陶芸",d:"PC、VRコントローラ、ハンドトラッキングで陶芸体験ができます。|WebGPUで体積を維持しながら変形できます。|ろくろは軸対称（回転対称）ではなく、ちゃんと変形します。",w:"https://neko3jp.github.io/virtual-pottery/",a:"https://claude.ai/artifact/VBxHRoayT8Wyncm1UbUqFi",e:1,x:"2126079123424780382",t:["vrm","xr","gpu","vd"]},
+{n:"バーチャル陶芸",d:"PC、VRコントローラ、ハンドトラッキングで陶芸体験ができます。|WebGPUで体積を維持しながら変形できます。|ろくろは軸対称（回転対称）ではなく、ちゃんと変形します。",w:"https://neko3jp.github.io/virtual-pottery/",a:"https://claude.ai/artifact/VBxHRoayT8Wyncm1UbUqFi",e:1,x:"2126079123424780382",t:["vrm","xr","gpuonly","vd"]},
 {n:"VRM霞織り WebGPU 布表現",d:"WebGPUでならではの布のリアルタイム細分化で、WebGPU/WebGLの切り替えで体験することができます。",w:"https://spring-block-2288.neko3333-bsky.workers.dev/",a:"https://claude.ai/artifact/VorfbKzUwfoGvwv8CSPBVC",e:1,x:"2121012467321159911",t:["vrm","xr","gpu","vd"]},
 {n:"VRM WebXR WebGPU rigidbody",d:"WebGPUならではの高速な物理演算をしています。",w:"https://aged-shape-c2da.neko3333-bsky.workers.dev/",a:"https://claude.ai/artifact/8M1znX4MP3Bn72oo4o3QgR",e:1,x:"2121866509358399672",t:["vrm","xr","gpu","vd"]},
 {n:"VRM WebXR WebGPU rigidbody + Abyssal Garden",d:"WebGPUならではの大量の魚群の１匹１匹がそれぞれ自律的に判断して動きます。|無料のブラウザ上のClaudeだけで、<a href='https://github.com/Noniv/abyssal-garden' target='_blank' rel='noopener'>Abyssal Garden</a>とここのVRM+WebXR+WebGPUを組み合わせて機能を追加したもの",w:"https://blue-glade-daf4.neko3333-bsky.workers.dev/",x:"2124141726470467888",t:["vrm","xr","gpu","vd","warn"]},
@@ -171,6 +172,8 @@ var D={
 "PCのChromeでは、アドレスバーに下のURLを入力して Enabled にします。Quest 3ブラウザは設定変更が要りません。2026年11月に正式対応が発表されましたが、対応コンテンツはまだ少ないです。このページの作品は使えます。":"In Chrome on PC, enter the URL below in the address bar and set it to Enabled. The Quest 3 browser needs no setting change. Official support was announced in November 2026, but there is still very little compatible content. The works here work.",
 "URLをコピー":"Copy URL","コピーしました":"Copied","コピーできませんでした":"Could not copy",
 "作品":"Works","ハンドトラッキング":"Hand tracking",
+"WebGPU専用":"WebGPU only",
+"WebGLへのフォールバックがなく、WebGPUに対応した環境でのみ動きます。":"No WebGL fallback: it only runs in environments that support WebGPU.",
 "すべての作品がハンドトラッキングにも対応しています。":"Every work also supports hand tracking.",
 "PC、VRコントローラ、ハンドトラッキングで陶芸体験ができます。":"Experience pottery with a PC, VR controllers, or hand tracking.",
 "WebGPUで体積を維持しながら変形できます。":"WebGPU lets you deform the clay while preserving its volume.",
